@@ -8,7 +8,13 @@ def applyContour(img):
     cv2.drawContours(img, contours, -1, (0, 255, 0), 2)
     return img
 
-img = cv2.imread("1_low.jpg")
+def roi(img):
+    #         x1:x2    y1:y2
+    img = img[250:450,100:400]
+    return img
+
+#read GrayScale image
+img = cv2.imread("1_low.jpg", 0)
 img = roi(img)
 final_img = applyContour(img)
 #cv2.imshow('final_img', final_img)
