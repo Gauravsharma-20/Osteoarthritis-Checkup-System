@@ -28,14 +28,21 @@ def ApplyContour(img):
     cv2.drawContours(img, contours, -1, (0, 255, 0), 2)
     return img
 
+#Histogram Equalisation
+def ApplyCLAHE(img):
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+    img_CLAHE = clahe.apply(img)
+    return img_CLAHE
+
 def Roi(img):
     #         y1:y2    x1:x2
     img = img[250:500, 90:450]
     return img
 
 def Preprocess(img):
-    img_roi = Roi(img)
+    img_roi = img#Roi(img)
+    img_CLAHE = ApplyCLAHE(img_roi)
     img_edge = EdgeDetection(img_roi)
     final_img = ApplyContour(img_edge)
     #cv2.imshow('final_img', final_img)
-    return final_img
+    return final_img,img_CLAHE
