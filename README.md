@@ -41,10 +41,13 @@ through Deep Learning.
 
 Design: -
 
-Our design through this project essentially sums up to just generating medical image reports that can be further analyzed to give adequate treatment to the patient. The initial
+Our design through this project essentially sums up to generating medical image reports that can be further analyzed to give adequate treatment to the patient. The initial
 requirements for construction of the project would be datasets that comprise of images. The main steps that would be involved would be preprocessing of the images and then 
 passing these images through a convolutional artificial neural network to get the desired output. One of our primary areas of focus would be on Knee X-Ray images. We can use 
 the outputs and plug them into different RNN frameworks and look for probable solutions.
 
  
 Repository Link: - https://github.com/Gauravsharma-20/Minor-Project
+
+Google Colab Link:-
+https://colab.research.google.com/drive/1AiCK14LlCKQt7MtMzVrVIGED9l3HX2Fx?usp=sharing
