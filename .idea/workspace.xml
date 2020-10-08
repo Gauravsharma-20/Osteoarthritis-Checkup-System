@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="44a6bf91-f298-4eed-9a60-03c10c6cf74a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/1_low_bright.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/1_low_preprocessed.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Preprocessing/Samples/1_low_preprocessed.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Preprocessing/Samples/1_low_preprocessed.jpg" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1iS5fetGq16bKKSVeJJZ8ytkOli" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="44a6bf91-f298-4eed-9a60-03c10c6cf74a" name="Default Changelist" comment="" />
+      <created>1601888261339</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1601888261339</updated>
+    </task>
+    <servers />
+  </component>
+</project>
