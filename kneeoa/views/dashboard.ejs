@@ -1,8 +1,9 @@
 <h1 class="mt-4">Dashboard</h1>
 <p class="lead mb-3">Welcome <%= user.name %></p>
-<form action="/dashboard" method="POST">
+<form action="/dashboard" method="POST" enctype="multipart/form-data">
   <input type="text" name="patientname" value="" placeholder="Enter Patient Name">
-  <button type="button" name="button">Choose xray scan</button>
-  <button type="submit" name="button">Get preprocessed image</button>
+  <input type="file" name="xray"></input>
+  <br>
+  <button class="btn btn-secondary" type="submit" name="button">Get preprocessed image</button>
 </form>
 <a href="/users/logout" class="btn btn-secondary">Logout</a>

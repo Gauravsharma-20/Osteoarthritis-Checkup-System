@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
+const multer = require('multer');
+const upload = multer({dest: 'uploads/'});
 
 const app = express();
 
@@ -19,6 +21,9 @@ app.set('view engine', 'ejs');
 
 // Express body parser
 app.use(express.urlencoded({ extended: true }));
+
+// Static directory
+app.use(express.static("uploads"));
 
 // Express session
 app.use(
