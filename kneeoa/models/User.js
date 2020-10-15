@@ -16,7 +16,8 @@ const UserSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
-  }
+  },
+  checkups:[{patientname: String, dob: String, date: String, grade: Number}]
 });
 
 const User = mongoose.model('User', UserSchema);

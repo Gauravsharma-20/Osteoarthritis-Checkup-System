@@ -30,7 +30,9 @@ router.post('/dashboard', ensureAuthenticated, upload.single('xray'), function(r
   process.stdout.on('data', (data) => {
     console.log(data.toString());
   });
-  res.render('preprocess',{patientname: req.body.patientname, imgname: req.file.filename});
+  let fl = req.file.filename;
+  let prfile = fl.slice(0,-4)+'p.jpg';
+  res.render('preprocess',{patientname: req.body.patientname, imgname: req.file.filename, pimgname: prfile});
 });
 
 // Get Report
