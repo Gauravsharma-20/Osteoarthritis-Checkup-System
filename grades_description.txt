@@ -1,0 +1,38 @@
+--------------------------Grades-------------------------------
+Grade 0 (none):    Indicates a definite absence of X-Ray changes of Osteoarthritis.
+                    No Osteoarthritis changes are detected.Normal X-Ray is seen.
+Grade 1 (doubtful): Doubtful Osteoarthiritis with Doubtful joint space narrowing and possible osteophytic lipping is seen.
+Grade 2 (minimal):  Minimal Osteoarthritis with Definite osteophytes and possible joint space narrowing is seen.
+                    Osteoarthritis is definitely present although with minimum severity. 
+Grade 3 (moderate): Moderate Osteoarthritis with moderate multiple osteophytes, definite narrowing of joint space and 
+		    some sclerosis and possible deformity of bone ends is seen.
+Grade 4 (severe):   Severe Osteoarthritis with large osteophytes formation, marked narrowing of joint space, severe sclerosis and 
+		    definite deformity of bone ends.
+ 
+---------------------------Comments-----------------------------
+Grade 0:
+	No need to consult doctors is recommended.No Osteoarthritis X-Ray changes are detected.No treatment is needed.
+Grade 1:
+	Minor bone spur growth is observed.If outward symptoms no treatment required.Supplements such as Glucosamine 
+        and Chondroitin are suggested.Beginning of Exercise routine to relieve any minor symptoms and slowing the progression of arthritis.
+Grade 2:
+	"Mild" stage of the condition is present.Protecting joints from exertion is recommended.Consulting Doctors is recommended.
+Grade 3:
+	"Moderate" stage of condition is present.Coricosteroids may be recommended.Do consult Doctor.
+Grade 4:
+	"Severe" stage of condition is present.Doctors Consultation is must.Bone realignment surgery, or osteotomy is an option.
+         Knee replacment may be required.Do Consult Doctors as soon as possible.
+
+
+-----------------------------Report Format----------------------
+
+Patient:                                                             Date:  
+
+grade:
+
+
+Comments:
+//Depending on grade write here
+
+
+Medical report generated at date and time 
