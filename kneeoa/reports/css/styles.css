@@ -1,0 +1,33 @@
+body{
+  background-color: #A8DADC;
+  font-family:  "Calibri", sans-serif;
+  font-size: 18px;
+}
+h3{
+
+  padding: 10px;
+  text-align: center;
+  background: black;
+  color: white;
+  font-size: 35px;
+}
+
+.layout{
+  width: 85%;
+  margin: 20px 10px auto auto;
+}
+
+hr{
+  color: black;
+}
+.findings{
+  text-indent: 10px;
+}
+.bottom{
+  background-color: #cbf3f5;
+  font-style:oblique;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  font-family:inherit;
+}
