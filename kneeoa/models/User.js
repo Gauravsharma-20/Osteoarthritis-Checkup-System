@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  checkups:[{patientname: String, dob: String, date: String, grade: Number}]
+  checkups:[{patientname: String, age: Number, grade: Number, gender: String, filename: String}]
 });
 
 const User = mongoose.model('User', UserSchema);

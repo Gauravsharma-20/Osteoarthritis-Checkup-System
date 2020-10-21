@@ -16,8 +16,9 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
 // Specific variables
 let patientname = '';
-let dob = '';
+let age = '';
 let filename = '';
+let gender = '';
 
 // Welcome Page
 router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
@@ -41,8 +42,11 @@ router.post('/dashboard', ensureAuthenticated, upload.single('xray'), function(r
   let prfile = fl.slice(0,-4)+'p.jpg';
   patientname = req.body.patientname;
   filename = fl.slice(0,-4);
-  dob = req.body.DOB;
-  res.render('preprocess', {patientname: patientname, imgname: filename+".jpg", pimgname: prfile, dob: dob});
+  age = req.body.age;
+  gender = req.body.gender;
+  process.on('close',(code) => {
+    res.render('preprocess', {patientname: patientname, imgname: filename+".jpg", pimgname: prfile, age: age});
+  });
 });
 
 // Get Report
@@ -56,7 +60,9 @@ router.post('/getreport', ensureAuthenticated, function(req,res) {
         if (err) {
           return console.log(err);
         }
-        var r1 = data.replace(/sample_name/g, ''+patientname).replace(/sample_dob/g, ''+dob).replace(/sample_grade/g, ''+grade);
+        var r1 = data.replace(/sample_name/g, ''+patientname).replace(/sample_age/g, ''+age)
+        .replace(/sample_grade/g, ''+grade).replace(/sample_gender/g, ''+gender)
+        .replace(/sample_path/g, ''+"../uploads/"+filename+".jpg");
 
         fs.writeFile("reports/"+filename+".html", r1, 'utf8', function (err) {
            if (err) return console.log(err);
