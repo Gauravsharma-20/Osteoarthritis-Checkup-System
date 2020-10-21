@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
+const HTMLToPDF = require('html5-to-pdf');
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -59,11 +60,33 @@ router.post('/getreport', ensureAuthenticated, function(req,res) {
 
         fs.writeFile("reports/"+filename+".html", r1, 'utf8', function (err) {
            if (err) return console.log(err);
+           else {
+             const run = async () => {
+                const html5ToPDF = new HTMLToPDF({
+                  inputPath: "./reports/"+filename+".html",
+                  outputPath: "./reports/"+filename+".pdf",
+                });
+                  await html5ToPDF.start();
+                  await html5ToPDF.build();
+                  await html5ToPDF.close();
+                }
+
+                (async () => {
+                  try {
+                    await run()
+                    console.log("DONE")
+                  } catch (error) {
+                    console.error(error);
+                  } finally {
+                    console.log("EXITED");
+                    res.render('getreport',{user: req.user, flnm: filename});
+                  }
+                })()
+           }
         });
       });
     }
   });
-  res.render('getreport',{user: req.user});
 });
 
 module.exports = router;

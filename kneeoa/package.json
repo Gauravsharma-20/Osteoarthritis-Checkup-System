@@ -18,9 +18,11 @@
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.1",
     "fs": "0.0.1-security",
+    "html5-to-pdf": "^4.0.1",
     "mongoose": "^5.10.7",
     "multer": "^1.4.2",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "pdf-puppeteer": "^1.1.10"
   }
 }
