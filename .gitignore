@@ -1,4 +1,6 @@
 __pycache__/
 *.log
 dataset/
-node_modules/
+.idea/
+KneeXrayData/
+.idea/
