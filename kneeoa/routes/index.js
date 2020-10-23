@@ -128,7 +128,7 @@ router.get('/viewreports', ensureAuthenticated, function(req, res) {
 // Processes search query
 router.post('/viewreports', ensureAuthenticated, function(req, res) {
   let query = req.body.searchquery;
-  User.findOne({ email: req.user.email, checkups: {'$elemMatch': {patientname: {'$regex': query, '$options' : 'i'}}}}, function(err,data) {
+    User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {patientname: {'$regex': query, '$options' : 'i'}}}}, function(err,data) {
     if(err) throw err;
     else {
       if(!data) res.render('viewreports', {user: req.user, data: "nothing"});
