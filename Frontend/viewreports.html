@@ -1,0 +1,167 @@
+<html>
+<head>
+  <title>View Reports</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>  
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'> 
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+ <style >@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+<style>
+.body{
+
+  background: #87CEFA;
+  background-size: cover;
+  background-repeat: no-repeat;
+  
+}
+
+.view-page {
+  width: 360px;
+  margin: auto;
+  padding: 8% 0 0;
+
+}
+
+.form {
+  position: relative;
+  z-index: 1;
+  background: #87CEFA;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  
+}
+.form input {
+  font-family: FontAwesome, "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 20px;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 24px;
+  border-radius:10px;
+  
+}
+.form button {
+
+  font-family: "Titillium Web", sans-serif;
+  outline: 0;
+  background: #17a589;
+  width: 15%;
+  border: 0;
+  border-radius:30px;
+  padding: 15px;
+  color: #FFFFFF;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+
+  margin: 0px 0px 8px;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: .1em;
+  cursor: pointer;
+  transition: all 0.2s;
+
+
+}
+.form button:hover,.form button:focus {
+  background: #148f77;
+  transform: translateY(-4px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.form button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.form h1 {
+
+  height: 40px;
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 15px;
+
+}
+.form .message {
+  
+  margin: 6px 6px;
+  color: #808080;
+  font-size: 16px;
+  text-align: center;
+  font-weight: bold;
+  font-style: normal;
+
+  
+
+}
+.form .message a {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+body {
+  background:#FFFFFF; 
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
+}
+
+</style>
+</head>
+
+<style type="text/css">
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+</style>
+<div class="form">
+<h2 class="mt-4">View Reports</h2>
+<form action="/viewreports" method="post">
+  <input type="text" name="searchquery" value="" placeholder="Enter search query">
+  <select name="searchtype" id="searchtype">
+    <option value="pn">Patient name</option>
+    <option value="gn">Gender</option>
+    <option value="gr">Grade</option>
+    <option value="ag">Age</option>
+  </select>
+  <button type="submit" name="button">Search</button>
+</form>
+<br><br>
+<% if(data == "nothing") { %>
+  <h2>No Results Found</h2>
+<% } %>
+<% if(data !== "nothing") { %>
+<table style="width:100%">
+  <tr>
+    <th> Patient Name </th>
+    <th> Age </th>
+    <th> Grade </th>
+    <th> Gender </th>
+    <th> Download Report </th>
+  </tr>
+  <% data.forEach(function (item){ %>
+    <tr>
+      <td> <%= item.patientname %> </td>
+      <td> <%= item.age %> </td>
+      <td> <%= item.grade %> </td>
+      <td> <%= item.gender %> </td>
+      <td> <a href="<%= item.filename %>.pdf" download>Download here</a> </td>
+    </tr>
+  <% }); %>
+</table>
+<% } %>
+<a href="/users/logout" class="btn btn-secondary">Logout</a>
+</div>
+</body>
+</html>
