@@ -5,11 +5,15 @@
   }
 </style>
 <h1 class="mt-4">View Reports</h1>
-<form class="" action="" method="post">
-  <input type="text" name="" value="" placeholder="Enter search query">
+<form action="/viewreports" method="post">
+  <input type="text" name="searchquery" value="" placeholder="Enter search query">
   <button type="submit" name="button">Search</button>
 </form>
 <br><br>
+<% if(data == "nothing") { %>
+  <h1>No results found</h1>
+<% } %>
+<% if(data !== "nothing") { %>
 <table style="width:100%">
   <tr>
     <th> Patient Name </th>
@@ -29,4 +33,5 @@
   <% }); %>
 
 </table>
+<% } %>
 <a href="/users/logout" class="btn btn-secondary">Logout</a>

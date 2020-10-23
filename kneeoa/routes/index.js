@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
-// Specific variables
+// Specific variables (tentative storage)
 let patientname = '';
 let age = '';
 let filename = '';
@@ -33,6 +33,8 @@ router.get('/dashboard', ensureAuthenticated, (req, res) =>
 // Dashboard post request
 router.post('/dashboard', ensureAuthenticated, upload.single('xray'), function(req,res) {
   console.log(req.file);
+
+  // Spawns preprocessing scripts and executes it
   var spawn = require('child_process').spawn;
   var process = spawn('python', ['./Preprocessing/Main.py',req.file.filename]);
   process.stdout.on('data', (data) => {
@@ -60,6 +62,8 @@ router.post('/getreport', ensureAuthenticated, function(req,res) {
         if (err) {
           return console.log(err);
         }
+
+        // Replaces data in sample report with actual data
         var r1 = data.replace(/sample_name/g, ''+patientname).replace(/sample_age/g, ''+age)
         .replace(/sample_grade/g, ''+grade).replace(/sample_gender/g, ''+gender)
         .replace(/sample_path/g, ''+"../uploads/"+filename+".jpg");
@@ -67,6 +71,7 @@ router.post('/getreport', ensureAuthenticated, function(req,res) {
         fs.writeFile("reports/"+filename+".html", r1, 'utf8', function (err) {
            if (err) return console.log(err);
            else {
+             // Generates pdf after html file is written
              const run = async () => {
                 const html5ToPDF = new HTMLToPDF({
                   inputPath: "./reports/"+filename+".html",
@@ -95,7 +100,7 @@ router.post('/getreport', ensureAuthenticated, function(req,res) {
   });
 });
 
-// Finish button to save checkup
+// Finish button to save current checkup
 router.get('/finish', ensureAuthenticated, function(req, res) {
   User.findOne({ email: req.user.email }, function(err,data) {
     if(err) throw err;
@@ -109,11 +114,25 @@ router.get('/finish', ensureAuthenticated, function(req, res) {
   });
 });
 
+// Spits out all checkups to date in a tabular form
 router.get('/viewreports', ensureAuthenticated, function(req, res) {
   User.findOne({ email: req.user.email }, function(err,data) {
     if(err) throw err;
     else {
-      res.render('viewreports', {user: req.user, data: data.checkups});
+      if(!data) res.render('viewreports', {user: req.user, data: "nothing"});
+      else res.render('viewreports', {user: req.user, data: data.checkups});
+    }
+  });
+});
+
+// Processes search query
+router.post('/viewreports', ensureAuthenticated, function(req, res) {
+  let query = req.body.searchquery;
+  User.findOne({ email: req.user.email, checkups: {'$elemMatch': {patientname: {'$regex': query, '$options' : 'i'}}}}, function(err,data) {
+    if(err) throw err;
+    else {
+      if(!data) res.render('viewreports', {user: req.user, data: "nothing"});
+      else res.render('viewreports', {user: req.user, data: data.checkups});
     }
   });
 });
