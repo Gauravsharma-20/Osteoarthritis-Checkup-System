@@ -127,14 +127,45 @@ router.get('/viewreports', ensureAuthenticated, function(req, res) {
 
 // Processes search query
 router.post('/viewreports', ensureAuthenticated, function(req, res) {
+  console.log(req.body);
   let query = req.body.searchquery;
+  let searchtype = req.body.searchtype;
+  if(searchtype == 'pn') {
     User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {patientname: {'$regex': query, '$options' : 'i'}}}}, function(err,data) {
-    if(err) throw err;
-    else {
-      if(!data) res.render('viewreports', {user: req.user, data: "nothing"});
-      else res.render('viewreports', {user: req.user, data: data.checkups});
-    }
-  });
+      if(err) throw err;
+      else {
+        if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+        else res.render('viewreports', {user: req.user, data: data.checkups});
+      }
+    });
+  }
+  if(searchtype == 'gn') {
+    User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {gender: {'$regex': query, '$options' : 'i'}}}}, function(err,data) {
+      if(err) throw err;
+      else {
+        if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+        else res.render('viewreports', {user: req.user, data: data.checkups});
+      }
+    });
+  }
+  if(searchtype == 'gr') {
+    User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {grade: query}}}, function(err,data) {
+      if(err) throw err;
+      else {
+        if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+        else res.render('viewreports', {user: req.user, data: data.checkups});
+      }
+    });
+  }
+  if(searchtype == 'ag') {
+    User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {age: query}}}, function(err,data) {
+      if(err) throw err;
+      else {
+        if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+        else res.render('viewreports', {user: req.user, data: data.checkups});
+      }
+    });
+  }
 });
 
 module.exports = router;

@@ -7,6 +7,12 @@
 <h1 class="mt-4">View Reports</h1>
 <form action="/viewreports" method="post">
   <input type="text" name="searchquery" value="" placeholder="Enter search query">
+  <select name="searchtype" id="searchtype">
+    <option value="pn">Patient name</option>
+    <option value="gn">Gender</option>
+    <option value="gr">Grade</option>
+    <option value="ag">Age</option>
+  </select>
   <button type="submit" name="button">Search</button>
 </form>
 <br><br>
