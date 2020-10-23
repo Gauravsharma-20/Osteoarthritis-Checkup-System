@@ -3,3 +3,4 @@ __pycache__/
 dataset/
 .idea/
 KneeXrayData/
+node_modules

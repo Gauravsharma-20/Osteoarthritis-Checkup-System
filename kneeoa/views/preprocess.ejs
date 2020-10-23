@@ -1,8 +1,8 @@
 <h1 class="mt-4">Dashboard</h1>
 <p class="lead mb-3">Patient Name: <%= patientname %></p>
-<img src="prep/<%= pimgname %>" alt="">
 <img src="<%= imgname %>" alt="">
 <form action="/getreport" method="post">
   <button class="btn btn-secondary" type="submit" name="button">Get report</button>
 </form>
+<a href="/dashboard" class="btn btn-secondary">Back</a>
 <a href="/users/logout" class="btn btn-secondary">Logout</a>
