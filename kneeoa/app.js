@@ -24,7 +24,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Static directory
 app.use(express.static("uploads"));
-app.use(express.static("uploads"));
 app.use(express.static("reports"));
 
 // Express session

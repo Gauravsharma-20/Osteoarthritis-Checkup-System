@@ -3,6 +3,7 @@ const router = express.Router();
 const fs = require('fs');
 const HTMLToPDF = require('html5-to-pdf');
 const multer = require('multer');
+const User = require('../models/User');
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, './uploads/');
@@ -19,15 +20,14 @@ let patientname = '';
 let age = '';
 let filename = '';
 let gender = '';
+let grade = '';
 
 // Welcome Page
 router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
 
 // Dashboard
 router.get('/dashboard', ensureAuthenticated, (req, res) =>
-  res.render('dashboard', {
-    user: req.user
-  })
+  res.render('dashboard', {user: req.user})
 );
 
 // Dashboard post request
@@ -51,7 +51,7 @@ router.post('/dashboard', ensureAuthenticated, upload.single('xray'), function(r
 
 // Get Report
 router.post('/getreport', ensureAuthenticated, function(req,res) {
-  let grade = 1; // Gets grade from dl model
+  grade = 1; // Gets grade from dl model
   fs.copyFile("reports/sample.html", "reports/"+filename+".html", (err) => {
     if (err) throw err;
     else {
@@ -91,6 +91,29 @@ router.post('/getreport', ensureAuthenticated, function(req,res) {
            }
         });
       });
+    }
+  });
+});
+
+// Finish button to save checkup
+router.get('/finish', ensureAuthenticated, function(req, res) {
+  User.findOne({ email: req.user.email }, function(err,data) {
+    if(err) throw err;
+    else {
+      console.log(data);
+      var topush = {patientname: patientname, age: age, grade: grade, gender: gender, filename: filename};
+      data.checkups.push(topush);
+      data.save();
+      res.render('dashboard', {user: req.user});
+    }
+  });
+});
+
+router.get('/viewreports', ensureAuthenticated, function(req, res) {
+  User.findOne({ email: req.user.email }, function(err,data) {
+    if(err) throw err;
+    else {
+      res.render('viewreports', {user: req.user, data: data.checkups});
     }
   });
 });

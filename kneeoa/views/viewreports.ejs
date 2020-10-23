@@ -1,3 +1,32 @@
-<h1 class="mt-4">Reports Generated</h1>
+<style type="text/css">
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+</style>
+<h1 class="mt-4">View Reports</h1>
+<form class="" action="" method="post">
+  <input type="text" name="" value="" placeholder="Enter search query">
+  <button type="submit" name="button">Search</button>
+</form>
+<br><br>
+<table style="width:100%">
+  <tr>
+    <th> Patient Name </th>
+    <th> Age </th>
+    <th> Grade </th>
+    <th> Gender </th>
+    <th> Download Report </th>
+  </tr>
+  <% data.forEach(function (item){ %>
+    <tr>
+      <td> <%= item.patientname %> </td>
+      <td> <%= item.age %> </td>
+      <td> <%= item.grade %> </td>
+      <td> <%= item.gender %> </td>
+      <td> <a href="<%= item.filename %>.pdf" download>Download here</a> </td>
+    </tr>
+  <% }); %>
 
+</table>
 <a href="/users/logout" class="btn btn-secondary">Logout</a>
