@@ -75,10 +75,10 @@ router.post('/dashboard', ensureAuthenticated, upload.single('xray'), function(r
 router.post('/getreport', ensureAuthenticated, function(req,res) {
   // Spawns preprocessing scripts and executes it
   var spawn = require('child_process').spawn;
-  var process = spawn('python', ['./Preprocessing/Main.py', filename]);
+  var process = spawn('python', ['./Preprocessing/Main.py', fl]);
   process.stdout.on('data', (data) => {
     var out = data.toString();
-    console.log(out);
+    console.log("output is "+out);
     grade = out.charAt(9);// Gets grade from dl model
     console.log(grade);
   });

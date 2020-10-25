@@ -28,7 +28,7 @@ def preprocess(img):
     return img
 
 #Enter File locaion here
-file_loc = "uploads/"+sys.argv[1]+".png"
+file_loc = "uploads/"+sys.argv[1]
 img = cv2.imread(file_loc)
 pre_img = preprocess(img)
 scaled_img = pre_img/255.0
