@@ -8,15 +8,16 @@
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
  <style >@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+
 <style>
 .body{
 
-  background: #87CEFA;
+  background: #FFFFFF;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.login-page {
+.welcome-page {
   width: 360px;
   padding: 8% 0 0;
   margin: auto;
@@ -26,7 +27,8 @@
 .form {
   position: relative;
   z-index: 1;
-  background: #87CEFA;
+  background: #87ceeb;
+  width: 75%;
   margin: 0 auto 100px;
   padding: 50px;
   text-align: center;
@@ -53,7 +55,7 @@ border-radius:10px;
   letter-spacing: .1em;
   outline: 0;
   background: #17a589;
-  width: 100%;
+  width: 75%;
   border: 0;
 border-radius:30px;
   margin: 0px 0px 8px;
@@ -87,6 +89,7 @@ border-radius:30px;
    padding: 10px;
 
 }
+
 .form .message {
   
   margin: 6px 6px;
@@ -98,6 +101,9 @@ border-radius:30px;
 
   
 
+}
+.form h2{
+	display: inline;
 }
 .form .message a {
   color: #FFFFFF;
@@ -111,23 +117,29 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
 }
-
+.body h1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	color: #000000;
+	text-align: right;
+	padding-left:32%;
+}
 
 </style>
+
 </head>
 
 <body class="body">
-<div class="login-page">
+
+    <h1 class="btn btn-secondary btn-block" style="text-align:right;float:center;display: inline;">Create an Account or Login</h1>
+<div class="welcome-page">
+
   <div class="form">
-    <h1><i class="fab fa-node-js fa-3x"></i>Welcome</h1>
-      <p><b>Create an Account or Login</b></p>
-      <button><a href="/users/register" class="btn btn-primary btn-block mb-2"
-        >Register</a
-      ></button>
-      <button>
-      <a href="/users/login" class="btn btn-secondary btn-block">Login</a></button>
-      
+
+      <button style="margin:11px;"><a href="/users/register" class="btn btn-primary btn-block mb-2">Register</a></button>
+      <button style="margin:11px;"><a href="/users/login" class="btn btn-secondary btn-block">Login</a></button>
     </div>
   </div>
+
 </body>
 </html>
