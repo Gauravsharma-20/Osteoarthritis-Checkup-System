@@ -1,18 +1,219 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link
-      rel="stylesheet"
-      href="https://bootswatch.com/4/journal/bootstrap.min.css"
-    />
-    <title>Knee Osteoarthritis Checkup System</title>
-  </head>
-  <body>
-    <div class="container"><%- body %></div>
+<html>
+<head>
+  <title>Knee Osteoarthritis Checkup System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>  
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'> 
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+ <style >@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+<style>
+
+.login-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+
+}
+
+.preprocess-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+
+}
+
+tr:nth-child(odd) {background-color: #f2f2f2;}
+th {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 23px;
+}
+
+tr {
+	font-family: Calibri;
+	font-size: 20px;
+}
+
+.body h1 {
+	color: #FFFFFF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	color: #000000;
+	text-align: right;
+	padding-left:35%;
+}
+
+.form {
+color: #FFFFFF;
+  position: relative;
+  z-index: 1;
+  background: #16697a;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  
+}
+.form-getreport {
+  position: relative;
+  z-index: 1;
+  background: #16697a;
+  max-width: 850px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  width: 100%;
+}
+.form input {
+  font-family: FontAwesome, "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 24px;
+  box-sizing: border-box;
+  font-size: 16px;
+  border-radius:10px;
+  
+}
+.form button {
+overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: .1em;
+  outline: 0;
+  background: #db6400;
+  width: 75%;
+  border: 0;
+border-radius:30px;
+  margin: 0px 0px 8px;
+  padding: 15px;
+  color: #FFFFFF;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  transition: all 0.2s;
+
+}
+
+.formm button {
+overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: .1em;
+  outline: 0;
+  background: #db6400;
+  width: 15%;
+  border: 0;
+border-radius:30px;
+  margin: 0px 0px 8px;
+  padding: 15px;
+  color: #FFFFFF;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  transition: all 0.2s;
+
+}
+
+.form-getreport button {
+overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: .1em;
+  outline: 0;
+  background: #db6400;
+  width: 20%;
+  border: 0;
+border-radius:30px;
+  margin: 0px 0px 8px;
+  padding: 15px;
+  color: #FFFFFF;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  transition: all 0.2s;
+
+}
+.form button:hover,.form button:focus {
+  background: #ffa62b;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+}
+.form button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.form h1 {
+	
+  height: 40px;
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding-left: 4px;
+  color: #FFFFFF;
+}
+
+.form-getreport h1 {
+
+  height: 40px;
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding-left: 4px;
+  color: #FFFFFF;
+}
+
+.form .message {
+  
+  margin: 6px 6px;
+  font-size: 16px;
+  text-align: center;
+  font-weight: bold;
+  font-style: normal;
+  color: #FFFFFF;
+
+}
+.form .message a {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+body {
+  background:#fff2e6;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
+}
+
+
+
+</style>
+</head>
+
+<body class="body">
+    <%- body %>
 
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

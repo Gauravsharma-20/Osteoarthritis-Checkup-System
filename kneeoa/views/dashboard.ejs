@@ -1,18 +1,33 @@
-<h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%= user.name %></p>
+<div class="login-page">
+  <div class="form">
+
+<h1 class="mt-4" style="padding-left: 85">Dashboard</h1>
+<p class="lead mb-3">Welcome <strong><%= user.name %></strong></p>
 <%- include('partials/messages'); %>
-<a href="/viewreports" class="btn btn-secondary">View Reports</a>
+<a href="/viewreports" class="btn btn-secondary"><button style="margin:15px;">View Reports</button></a>
 <form action="/dashboard" method="POST" enctype="multipart/form-data">
   <input type="text" name="patientname" value="" placeholder="Enter Patient Name" autocomplete="off">
   <input type="number" name="age" value="" placeholder="Enter Patient's age">
   <label for="gender">Gender:</label>
-  <select name="gender" id="gender">
-   <option value="male">M</option>
+  <select name="gender" id="gender" style="font-size: 14px">
+   <option class value="male">M</option>
    <option value="female">F</option>
    <option value="other">O</option>
   </select>
+  <p></p>
+  <label for="examination">Examination of:</label>
+  <select name="examination" id="examination" style="font-size: 14px">
+   <option class value="Left">Left</option>
+   <option value="Right">Right</option>
+  </select>
+  <select name="view" id="view" style="font-size: 14px">
+   <option class value="AP">AP</option>
+   <option value="PA">PA</option>
+  </select>
+  <p></p>
   <input type="file" name="xray"></input>
   <br>
   <button class="btn btn-secondary" type="submit" name="button">Next</button>
 </form>
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
+<a href="/users/logout"><button class="btn btn-secondary">Logout</button></a>
+</div>

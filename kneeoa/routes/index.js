@@ -22,6 +22,8 @@ let filename = '';
 let gender = '';
 let grade = '';
 let fl = '';
+let examination = '';
+let view = '';
 
 // Welcome Page
 router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
@@ -39,14 +41,19 @@ router.post('/dashboard', ensureAuthenticated, upload.single('xray'), function(r
   // process.stdout.on('data', (data) => {
   //   console.log(data.toString());
   // });
-
+  console.log(req.body);
   let errors = [];
 
   patientname = req.body.patientname;
   age = req.body.age;
   gender = req.body.gender;
+  examination = req.body.examination;
+  view = req.body.view;
   if(!patientname || !age) {
     errors.push({ msg: 'Please enter all the fields' });
+  }
+  if(parseInt(age,10)<0) {
+    errors.push({ msg: 'Age cannot be negative' });
   }
   if(!req.file) {
     errors.push({ msg: 'Please upload the x-ray file' });
@@ -57,7 +64,7 @@ router.post('/dashboard', ensureAuthenticated, upload.single('xray'), function(r
   else {
     fl = req.file.filename;
     filename = fl.slice(0,-4);
-    res.render('preprocess', {patientname: patientname, imgname: fl, age: age});
+    res.render('preprocess', {patientname: patientname, imgname: fl, examination: examination, view: view});
   }
   // process.on('close',(code) => {
   //   res.render('preprocess', {patientname: patientname, imgname: filename+".jpg", pimgname: prfile, age: age});
@@ -91,7 +98,8 @@ router.post('/getreport', ensureAuthenticated, function(req,res) {
 
           var r1 = data.replace(/sample_name/g, ''+patientname).replace(/sample_age/g, ''+age)
           .replace(/sample_serial/g, ''+filename).replace(/sample_gender/g, ''+gender)
-          .replace(/sample_path/g, ''+fl).replace(/sample_datetime/g, ''+datetime);
+          .replace(/sample_path/g, ''+fl).replace(/sample_datetime/g, ''+datetime)
+          .replace(/sample_examination/g, ''+examination).replace(/sample_view/g, ''+view);
 
           fs.writeFile("reports/"+filename+".html", r1, 'utf8', function (err) {
              if (err) return console.log(err);
@@ -103,7 +111,7 @@ router.post('/getreport', ensureAuthenticated, function(req,res) {
                     outputPath: "./reports/"+filename+".pdf",
                     templatePath: "./uploads",
                     renderDelay: 1000,
-                    pdf: {printBackground: true, scale: 1.3}
+                    pdf: {printBackground: true, scale: 1.4}
                   });
                     await html5ToPDF.start();
                     await html5ToPDF.build();
@@ -135,7 +143,7 @@ router.get('/finish', ensureAuthenticated, function(req, res) {
     if(err) throw err;
     else {
       console.log(data);
-      var topush = {patientname: patientname, age: age, grade: grade, gender: gender, filename: filename};
+      var topush = {patientname: patientname, age: age, grade: grade, gender: gender, filename: filename, examination: examination, view: view};
       data.checkups.push(topush);
       data.save();
       req.flash('success_msg', 'Checkup saved');

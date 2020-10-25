@@ -1,32 +1,34 @@
-<style type="text/css">
-  table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-</style>
-<h1 class="mt-4">View Reports</h1>
+<div class="body">
+<br>
+<h1 style="display: inline; padding-left: 650" class="mt-4">View Reports</h1>
+<br>
+<br>
 <%- include('partials/messages'); %>
+<div class="form"">
 <form action="/viewreports" method="post">
-  <input type="text" name="searchquery" value="" placeholder="Enter search query">
-  <select name="searchtype" id="searchtype">
+  <input type="text" name="searchquery" style="width:70%; height:5%" value="" placeholder="Search...">
+  <select class="btn btn-secondary" name="searchtype" id="searchtype" style="font-size: 18px">
     <option value="pn">Patient name</option>
     <option value="gn">Gender</option>
     <option value="gr">Grade</option>
     <option value="ag">Age</option>
   </select>
-  <button class="btn btn-secondary" type="submit" name="button">Search</button>
+  <br><br>
+  <button class="btn btn-secondary" style="margin-bottom:-15px; width: 55%" name="button">Search</button>
 </form>
-<br><br>
+</div>
 <% if(data == "nothing") { %>
   <p class="lead mb-3">No results found</p>
 <% } %>
 <% if(data !== "nothing") { %>
-<table style="width:100%">
+<table style="width:70%; margin-left: 220">
   <tr>
     <th> Patient Name </th>
     <th> Age </th>
     <th> Grade </th>
     <th> Gender </th>
+	<th> Examination of </th>
+	<th> View </th>
     <th> Download Report </th>
   </tr>
   <% data.forEach(function (item){ %>
@@ -35,11 +37,18 @@
       <td> <%= item.age %> </td>
       <td> <%= item.grade %> </td>
       <td> <%= item.gender %> </td>
+	  <td> <%= item.examination %> </td>
+	  <td> <%= item.view %> </td>
       <td> <a href="<%= item.filename %>.pdf" download>Download here</a> </td>
     </tr>
   <% }); %>
-
 </table>
 <% } %>
-<a href="/dashboard" class="btn btn-secondary">Back</a>
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
+<br>
+<br>
+<br>
+<div class="formm">
+<a href="/dashboard" style="padding-left: 500"><button style="margin:11px;" class="btn btn-secondary">Back</button></a>
+<a href="/users/logout"><button class="btn btn-secondary">Logout</button></a>
+</div>
+</div>

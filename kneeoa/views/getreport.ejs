@@ -1,6 +1,9 @@
-<h1 class="mt-4">Report Generated</h1>
-<p class="lead mb-3">Patient Name: <%= patientname %></p>
-<embed src="<%= flnm %>.pdf" width="1100px" height="700px" />
-<a href="/finish" class="btn btn-secondary">Finish</a>
-<a href="/dashboard" class="btn btn-secondary">Back</a>
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
+<div class="form-getreport">
+
+<h1 class="mt-4" style="padding-left: 50; display: inline;">Report Generated</h1>
+<p></p>
+<embed src="<%= flnm %>.pdf" width="800px" height="600px" />
+<a href="/finish"><button style="margin:15px;background-color: green;" class="btn btn-secondary">Finish</button></a>
+<a href="/dashboard"><button style="margin:11px;" class="btn btn-secondary">Back</button></a>
+<a href="/users/logout"><button class="btn btn-secondary" style="margin:11px;">Logout</button></a>
+</div>
