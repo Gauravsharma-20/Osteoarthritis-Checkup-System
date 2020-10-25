@@ -1,76 +1,41 @@
+import numpy as np 
 import cv2
-import glob, os
-import numpy as np
-import pandas as pd
 import tensorflow as tf
-from preprocessing import Preprocess
-import Model
-from matplotlib import pyplot as plt
+from tensorflow import keras
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Activation, Dense, Flatten, BatchNormalization, Conv2D, MaxPool2D
+from tensorflow.keras.layers import Dropout
+from keras import regularizers
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.metrics import categorical_crossentropy
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.models import load_model
 
-df_train = []
-df_test = []
-df_val = []
+def preprocess(img):
+    img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    img = cv2.resize(img,(224,224))
+    img = np.array(img,dtype=np.uint8)
+    img = cv2.GaussianBlur(img, (3, 3), 7)
+    mean = int(np.mean(img))
+    for i in range(0,img.shape[0]):
+        for j in range(0,img.shape[1]):
+            img[i,j] = max(0,img[i,j]-mean)
+    clahe = cv2.createCLAHE()
+    img = clahe.apply(img)
+    img = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
+    img = img.reshape(-1, 224, 224, 3)
+    return img
 
-if os.path.exists("./dataset/train.npy"):
-    df_train = np.load("./dataset/train.npy")
-    df_test = np.load("./dataset/test.npy")
-    df_val = np.load("./dataset/val.npy")
-else:
-    #TRAIN
-    for grade in range(5):
-        images=[ cv2.imread(file) for file in glob.glob(r'C:/Users/Gaurav/Desktop/Minor_Project/MinorProject/dataset/train/'+str(grade)+'/*.png')]
-        path_input = r'C:/Users/Gaurav/Desktop/Minor_Project/MinorProject/dataset/train/'+str(grade)
-        fnames = os.listdir(path_input)
-        for f in fnames:
-            img = cv2.imread(os.path.join(path_input,f),0)
-            #img = images[i]
-            #i += 1
-            img1 = np.array(img, dtype=np.uint8)
-            img_pre,img_CLAHE = Preprocess(img1)
-            med= cv2.medianBlur(img_CLAHE, 3)
-            w= os.path.split(f)[1].split('.')[0]
-            if (w.find('L') != -1):
-                cv2.imwrite(r'C:/Users/Gaurav/Desktop/Minor_Project/MinorProject/dataset/train/'+str(grade)+'/'+w+'.png', np.fliplr(med))
-            else:
-                cv2.imwrite(r'C:/Users/Gaurav/Desktop/Minor_Project/MinorProject/dataset/train/'+str(grade)+'/'+w+'.png', med)
-            
-            #img_pre:grayScale->roi->CLAHE->edgeDetection->contour
-            #img_CLAHE:grayScale->CLAHE
-            img_CLAHE = img_CLAHE/255.0
-            df_train.append([img_CLAHE,grade+1])
-    #TEST
-    for grade in range(5):
-        images=[ cv2.imread(file) for file in glob.glob(r'C:/Users/Gaurav/Desktop/Minor_Project/MinorProject/dataset/test/'+str(grade)+'/*.png')]
-        for img in images:
-            img1 = np.array(img, dtype=np.uint8)/255.0
-            df_test.append([img1,grade+1])
-    #VAL
-    for grade in range(5):
-        images=[ cv2.imread(file) for file in glob.glob(r'C:/Users/Gaurav/Desktop/Minor_Project/MinorProject/dataset/val/'+str(grade)+'/*.png')]
-        for img in images:
-            img1 = np.array(img, dtype=np.uint8)/255.0
-            df_test.append([img1,grade+1])
-    np.save('train.npy',df_train)
-    np.save('test.npy',df_test)
-    np.save('val.npy',df_val)
-    
-print("*****Loading Done!*****")
-'''
-#shuffle
-df_train = df_train.sample(frac = 1)
-X_train, Y_train = df_train['Image'], df_train['Grade']
-X_test, Y_test = df_test['Image'], df_test['Grade']
-X_val, Y_val = df_val['Image'], df_val['Grade']
-print("Splitting Done!")
-#df has two coloumns Image and Grade
-#don't paste the code directly rather make a different .py file and use functions
+#Enter File locaion here
+file_loc = "../uploads/9179789L.png"
+img = cv2.imread(file_loc)
+pre_img = preprocess(img)
+scaled_img = pre_img/255.0
 
-model_1 = Model.ConvPoolModel(inputShape)
-history_1 = model_1.fit(X_train, Y_train,batch_size=32,epochs = 5,verbose = 1)
+model = load_model("../Extensive_Model.h5")
+predicted_grade = model.predict(scaled_img,verbose=0)
+predicted_grade = np.argmax(predicted_grade,axis=-1)
 
-model_2 = Model.SimpleModel(inputShape)
-filepath = 'Simple_Model.hdf5'
-checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True,mode='auto', save_frequency=1)
-history_2 = model_2.fit(X_train, Y_train,batch_size = 32,epochs = 5,verbose = 1,validation_split = 0.2,validation_data = (X_val, Y_val),callbacks = [checkpoint],shuffle=True)
-'''
-print("DONE")
+#save preprocessed image for output
+#cv2.imwrite('output_location',pre_img)
+print("Grade :",predicted_grade) 
