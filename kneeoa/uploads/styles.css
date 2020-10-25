@@ -1,0 +1,31 @@
+body{
+  background-color:#31adf5;
+  display: inline-block;
+  width: 21cm;
+  margin: 1mm 45mm 30mm 22mm;
+  font-family:  "Calibri", sans-serif;
+  font-size: 18px;
+}
+h3{
+  padding: 10px;
+  text-align: center;
+  background: black;
+  color: white;
+  font-size: 35px;
+}
+
+.layout{
+  width: 85%;
+  margin: 20px 10px auto auto;
+}
+.bottom{
+  background-color: #cbf3f5;
+  font-style:oblique;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  font-family:inherit;
+}
+.time{
+  margin:auto;
+}

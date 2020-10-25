@@ -1,4 +1,5 @@
-import numpy as np 
+import sys
+import numpy as np
 import cv2
 import tensorflow as tf
 from tensorflow import keras
@@ -27,12 +28,12 @@ def preprocess(img):
     return img
 
 #Enter File locaion here
-file_loc = "../uploads/9179789L.png"
+file_loc = "uploads/"+sys.argv[1]+".png"
 img = cv2.imread(file_loc)
 pre_img = preprocess(img)
 scaled_img = pre_img/255.0
 
-model = load_model("../Extensive_Model.h5")
+model = load_model("Extensive_Model.h5")
 predicted_grade = model.predict(scaled_img,verbose=0)
 predicted_grade = np.argmax(predicted_grade,axis=-1)
 

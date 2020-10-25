@@ -21,6 +21,7 @@ let age = '';
 let filename = '';
 let gender = '';
 let grade = '';
+let fl = '';
 
 // Welcome Page
 router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
@@ -54,7 +55,7 @@ router.post('/dashboard', ensureAuthenticated, upload.single('xray'), function(r
     res.render('dashboard',{errors, user: req.user});
   }
   else {
-    let fl = req.file.filename;
+    fl = req.file.filename;
     filename = fl.slice(0,-4);
     res.render('preprocess', {patientname: patientname, imgname: fl, age: age});
   }
@@ -65,50 +66,66 @@ router.post('/dashboard', ensureAuthenticated, upload.single('xray'), function(r
 
 // Get Report
 router.post('/getreport', ensureAuthenticated, function(req,res) {
-  grade = 1; // Gets grade from dl model
-  fs.copyFile("reports/sample.html", "reports/"+filename+".html", (err) => {
-    if (err) throw err;
-    else {
-      console.log('copy successful');
-      fs.readFile("reports/"+filename+".html", 'utf8', function (err,data) {
-        if (err) {
-          return console.log(err);
-        }
+  // Spawns preprocessing scripts and executes it
+  var spawn = require('child_process').spawn;
+  var process = spawn('python', ['./Preprocessing/Main.py', filename]);
+  process.stdout.on('data', (data) => {
+    var out = data.toString();
+    console.log(out);
+    grade = out.charAt(9);// Gets grade from dl model
+    console.log(grade);
+  });
+  process.on('close',(code) => {
+    fs.copyFile("reports/"+grade+".html", "reports/"+filename+".html", (err) => {
+      if (err) throw err;
+      else {
+        console.log('copy successful');
+        fs.readFile("reports/"+filename+".html", 'utf8', function (err,data) {
+          if (err) {
+            return console.log(err);
+          }
 
-        // Replaces data in sample report with actual data
-        var r1 = data.replace(/sample_name/g, ''+patientname).replace(/sample_age/g, ''+age)
-        .replace(/sample_grade/g, ''+grade).replace(/sample_gender/g, ''+gender)
-        .replace(/sample_path/g, ''+"../uploads/"+filename+".jpg");
+          // Replaces data in sample report with actual data
+          var d = new Date();
+          let datetime = ""+d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
 
-        fs.writeFile("reports/"+filename+".html", r1, 'utf8', function (err) {
-           if (err) return console.log(err);
-           else {
-             // Generates pdf after html file is written
-             const run = async () => {
-                const html5ToPDF = new HTMLToPDF({
-                  inputPath: "./reports/"+filename+".html",
-                  outputPath: "./reports/"+filename+".pdf",
-                });
-                  await html5ToPDF.start();
-                  await html5ToPDF.build();
-                  await html5ToPDF.close();
-                }
+          var r1 = data.replace(/sample_name/g, ''+patientname).replace(/sample_age/g, ''+age)
+          .replace(/sample_serial/g, ''+filename).replace(/sample_gender/g, ''+gender)
+          .replace(/sample_path/g, ''+fl).replace(/sample_datetime/g, ''+datetime);
 
-                (async () => {
-                  try {
-                    await run()
-                    console.log("DONE")
-                  } catch (error) {
-                    console.error(error);
-                  } finally {
-                    console.log("EXITED");
-                    res.render('getreport',{user: req.user, flnm: filename, patientname: patientname});
+          fs.writeFile("reports/"+filename+".html", r1, 'utf8', function (err) {
+             if (err) return console.log(err);
+             else {
+               // Generates pdf after html file is written
+               const run = async () => {
+                  const html5ToPDF = new HTMLToPDF({
+                    inputPath: "./reports/"+filename+".html",
+                    outputPath: "./reports/"+filename+".pdf",
+                    templatePath: "./uploads",
+                    renderDelay: 1000,
+                    pdf: {printBackground: true, scale: 1.3}
+                  });
+                    await html5ToPDF.start();
+                    await html5ToPDF.build();
+                    await html5ToPDF.close();
                   }
-                })()
-           }
+
+                  (async () => {
+                    try {
+                      await run()
+                      console.log("DONE")
+                    } catch (error) {
+                      console.error(error);
+                    } finally {
+                      console.log("EXITED");
+                      res.render('getreport',{user: req.user, flnm: filename, patientname: patientname});
+                    }
+                  })()
+             }
+          });
         });
-      });
-    }
+      }
+    });
   });
 });
 
