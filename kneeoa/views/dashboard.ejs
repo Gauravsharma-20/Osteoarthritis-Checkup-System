@@ -1,8 +1,9 @@
 <h1 class="mt-4">Dashboard</h1>
 <p class="lead mb-3">Welcome <%= user.name %></p>
+<%- include('partials/messages'); %>
 <a href="/viewreports" class="btn btn-secondary">View Reports</a>
 <form action="/dashboard" method="POST" enctype="multipart/form-data">
-  <input type="text" name="patientname" value="" placeholder="Enter Patient Name">
+  <input type="text" name="patientname" value="" placeholder="Enter Patient Name" autocomplete="off">
   <input type="number" name="age" value="" placeholder="Enter Patient's age">
   <label for="gender">Gender:</label>
   <select name="gender" id="gender">
@@ -12,6 +13,6 @@
   </select>
   <input type="file" name="xray"></input>
   <br>
-  <button class="btn btn-secondary" type="submit" name="button">Get preprocessed image</button>
+  <button class="btn btn-secondary" type="submit" name="button">Next</button>
 </form>
 <a href="/users/logout" class="btn btn-secondary">Logout</a>

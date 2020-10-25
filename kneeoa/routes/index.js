@@ -32,23 +32,35 @@ router.get('/dashboard', ensureAuthenticated, (req, res) =>
 
 // Dashboard post request
 router.post('/dashboard', ensureAuthenticated, upload.single('xray'), function(req,res) {
-  console.log(req.file);
-
   // Spawns preprocessing scripts and executes it
-  var spawn = require('child_process').spawn;
-  var process = spawn('python', ['./Preprocessing/Main.py',req.file.filename]);
-  process.stdout.on('data', (data) => {
-    console.log(data.toString());
-  });
-  let fl = req.file.filename;
-  let prfile = fl.slice(0,-4)+'p.jpg';
+  // var spawn = require('child_process').spawn;
+  // var process = spawn('python', ['./Preprocessing/Main.py',req.file.filename]);
+  // process.stdout.on('data', (data) => {
+  //   console.log(data.toString());
+  // });
+
+  let errors = [];
+
   patientname = req.body.patientname;
-  filename = fl.slice(0,-4);
   age = req.body.age;
   gender = req.body.gender;
-  process.on('close',(code) => {
-    res.render('preprocess', {patientname: patientname, imgname: filename+".jpg", pimgname: prfile, age: age});
-  });
+  if(!patientname || !age) {
+    errors.push({ msg: 'Please enter all the fields' });
+  }
+  if(!req.file) {
+    errors.push({ msg: 'Please upload the x-ray file' });
+  }
+  if(errors.length > 0) {
+    res.render('dashboard',{errors, user: req.user});
+  }
+  else {
+    let fl = req.file.filename;
+    filename = fl.slice(0,-4);
+    res.render('preprocess', {patientname: patientname, imgname: fl, age: age});
+  }
+  // process.on('close',(code) => {
+  //   res.render('preprocess', {patientname: patientname, imgname: filename+".jpg", pimgname: prfile, age: age});
+  // });
 });
 
 // Get Report
@@ -90,7 +102,7 @@ router.post('/getreport', ensureAuthenticated, function(req,res) {
                     console.error(error);
                   } finally {
                     console.log("EXITED");
-                    res.render('getreport',{user: req.user, flnm: filename});
+                    res.render('getreport',{user: req.user, flnm: filename, patientname: patientname});
                   }
                 })()
            }
@@ -109,7 +121,8 @@ router.get('/finish', ensureAuthenticated, function(req, res) {
       var topush = {patientname: patientname, age: age, grade: grade, gender: gender, filename: filename};
       data.checkups.push(topush);
       data.save();
-      res.render('dashboard', {user: req.user});
+      req.flash('success_msg', 'Checkup saved');
+      res.redirect('dashboard');
     }
   });
 });
@@ -130,41 +143,58 @@ router.post('/viewreports', ensureAuthenticated, function(req, res) {
   console.log(req.body);
   let query = req.body.searchquery;
   let searchtype = req.body.searchtype;
-  if(searchtype == 'pn') {
-    User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {patientname: {'$regex': query, '$options' : 'i'}}}}, function(err,data) {
+
+  let errors = [];
+
+  if(query == '') {
+    errors.push({ msg: 'Please enter a query' });
+    User.findOne({ email: req.user.email }, function(err,data) {
       if(err) throw err;
       else {
-        if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-        else res.render('viewreports', {user: req.user, data: data.checkups});
+        if(!data) res.render('viewreports', {errors, user: req.user, data: "nothing"});
+        else res.render('viewreports', {errors, user: req.user, data: data.checkups});
       }
     });
   }
-  if(searchtype == 'gn') {
-    User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {gender: {'$regex': query, '$options' : 'i'}}}}, function(err,data) {
-      if(err) throw err;
-      else {
-        if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-        else res.render('viewreports', {user: req.user, data: data.checkups});
-      }
-    });
-  }
-  if(searchtype == 'gr') {
-    User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {grade: query}}}, function(err,data) {
-      if(err) throw err;
-      else {
-        if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-        else res.render('viewreports', {user: req.user, data: data.checkups});
-      }
-    });
-  }
-  if(searchtype == 'ag') {
-    User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {age: query}}}, function(err,data) {
-      if(err) throw err;
-      else {
-        if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-        else res.render('viewreports', {user: req.user, data: data.checkups});
-      }
-    });
+
+  // If statements for different search types
+  else {
+    if(searchtype == 'pn') {
+      User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {patientname: {'$regex': query, '$options' : 'i'}}}}, function(err,data) {
+        if(err) throw err;
+        else {
+          if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+          else res.render('viewreports', {user: req.user, data: data.checkups});
+        }
+      });
+    }
+    if(searchtype == 'gn') {
+      User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {gender: {'$regex': query, '$options' : 'i'}}}}, function(err,data) {
+        if(err) throw err;
+        else {
+          if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+          else res.render('viewreports', {user: req.user, data: data.checkups});
+        }
+      });
+    }
+    if(searchtype == 'gr') {
+      User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {grade: query}}}, function(err,data) {
+        if(err) throw err;
+        else {
+          if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+          else res.render('viewreports', {user: req.user, data: data.checkups});
+        }
+      });
+    }
+    if(searchtype == 'ag') {
+      User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {age: query}}}, function(err,data) {
+        if(err) throw err;
+        else {
+          if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+          else res.render('viewreports', {user: req.user, data: data.checkups});
+        }
+      });
+    }
   }
 });
 

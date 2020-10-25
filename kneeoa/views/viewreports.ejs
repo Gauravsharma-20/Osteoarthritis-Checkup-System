@@ -5,6 +5,7 @@
   }
 </style>
 <h1 class="mt-4">View Reports</h1>
+<%- include('partials/messages'); %>
 <form action="/viewreports" method="post">
   <input type="text" name="searchquery" value="" placeholder="Enter search query">
   <select name="searchtype" id="searchtype">
@@ -13,11 +14,11 @@
     <option value="gr">Grade</option>
     <option value="ag">Age</option>
   </select>
-  <button type="submit" name="button">Search</button>
+  <button class="btn btn-secondary" type="submit" name="button">Search</button>
 </form>
 <br><br>
 <% if(data == "nothing") { %>
-  <h1>No results found</h1>
+  <p class="lead mb-3">No results found</p>
 <% } %>
 <% if(data !== "nothing") { %>
 <table style="width:100%">
@@ -40,4 +41,5 @@
 
 </table>
 <% } %>
+<a href="/dashboard" class="btn btn-secondary">Back</a>
 <a href="/users/logout" class="btn btn-secondary">Logout</a>
