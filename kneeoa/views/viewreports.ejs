@@ -3,10 +3,10 @@
 <h1 style="display: inline; padding-left: 650" class="mt-4">View Reports</h1>
 <br>
 <br>
-<%- include('partials/messages'); %>
 <div class="form"">
+  <%- include('partials/messages'); %>
 <form action="/viewreports" method="post">
-  <input type="text" name="searchquery" style="width:70%; height:5%" value="" placeholder="Search...">
+  <input type="text" name="searchquery" style="width:70%; height:5%" value="" placeholder="Search..." autocomplete="off">
   <select class="btn btn-secondary" name="searchtype" id="searchtype" style="font-size: 18px">
     <option value="pn">Patient name</option>
     <option value="gn">Gender</option>
@@ -18,7 +18,7 @@
 </form>
 </div>
 <% if(data == "nothing") { %>
-  <p class="lead mb-3">No results found</p>
+  <p class="lead mb-3" style="margin-left: 45%"><strong>No results found</strong></p>
 <% } %>
 <% if(data !== "nothing") { %>
 <table style="width:70%; margin-left: 220">
