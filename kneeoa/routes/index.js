@@ -4,6 +4,7 @@ const fs = require('fs');
 const HTMLToPDF = require('html5-to-pdf');
 const multer = require('multer');
 const User = require('../models/User');
+const Checkup = require('../models/Checkup');
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, './uploads/');
@@ -24,6 +25,7 @@ let grade = '';
 let fl = '';
 let examination = '';
 let view = '';
+let d = '';
 
 // Welcome Page
 router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
@@ -93,7 +95,7 @@ router.post('/getreport', ensureAuthenticated, function(req,res) {
           }
 
           // Replaces data in sample report with actual data
-          var d = new Date();
+          d = new Date();
           let datetime = ""+d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
 
           var r1 = data.replace(/sample_name/g, ''+patientname).replace(/sample_age/g, ''+age)
@@ -139,26 +141,37 @@ router.post('/getreport', ensureAuthenticated, function(req,res) {
 
 // Finish button to save current checkup
 router.get('/finish', ensureAuthenticated, function(req, res) {
-  User.findOne({ email: req.user.email }, function(err,data) {
-    if(err) throw err;
-    else {
-      console.log(data);
-      var topush = {patientname: patientname, age: age, grade: grade, gender: gender, filename: filename, examination: examination, view: view};
-      data.checkups.push(topush);
-      data.save();
+  // User.findOne({ email: req.user.email }, function(err,data) {
+  //   if(err) throw err;
+  //   else {
+  //     console.log(data);
+  //     var topush = {patientname: patientname, age: age, grade: grade, gender: gender, filename: filename, examination: examination, view: view};
+  //     data.checkups.push(topush);
+  //     data.save();
+  //     req.flash('success_msg', 'Checkup saved');
+  //     res.redirect('dashboard');
+  //   }
+  // });
+  Checkup.insertMany([
+    {email: req.user.email, patientname: patientname, age: age, grade: grade, gender: gender, filename: filename, examination: examination, view: view, date: d},])
+    .then(function(){
+      console.log("Data inserted"); // Success
       req.flash('success_msg', 'Checkup saved');
       res.redirect('dashboard');
-    }
+    }).catch(function(error){
+      console.log(error);  // Failure
+      req.flash('error_msg', 'Could not save to database, check log for details');
+      res.redirect('dashboard');
+    });
   });
-});
 
 // Spits out all checkups to date in a tabular form
 router.get('/viewreports', ensureAuthenticated, function(req, res) {
-  User.findOne({ email: req.user.email }, function(err,data) {
+  Checkup.find({ email: req.user.email }, function(err,data) {
     if(err) throw err;
     else {
-      if(!data) res.render('viewreports', {user: req.user, data: "nothing"});
-      else res.render('viewreports', {user: req.user, data: data.checkups});
+      if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+      else res.render('viewreports', {user: req.user, data: data});
     }
   });
 });
@@ -173,11 +186,11 @@ router.post('/viewreports', ensureAuthenticated, function(req, res) {
 
   if(query == '') {
     errors.push({ msg: 'Please enter a query' });
-    User.findOne({ email: req.user.email }, function(err,data) {
+    Checkup.find({ email: req.user.email }, function(err,data) {
       if(err) throw err;
       else {
-        if(!data) res.render('viewreports', {errors, user: req.user, data: "nothing"});
-        else res.render('viewreports', {errors, user: req.user, data: data.checkups});
+        if(!data || data.length == 0) res.render('viewreports', {errors, user: req.user, data: "nothing"});
+        else res.render('viewreports', {errors, user: req.user, data: data});
       }
     });
   }
@@ -185,38 +198,38 @@ router.post('/viewreports', ensureAuthenticated, function(req, res) {
   // If statements for different search types
   else {
     if(searchtype == 'pn') {
-      User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {patientname: {'$regex': query, '$options' : 'i'}}}}, function(err,data) {
+      Checkup.find({ email: req.user.email, patientname: {'$regex': query, '$options' : 'i'} }, function(err,data) {
         if(err) throw err;
         else {
-          if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-          else res.render('viewreports', {user: req.user, data: data.checkups});
+          if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+          else res.render('viewreports', {user: req.user, data: data});
         }
       });
     }
     if(searchtype == 'gn') {
-      User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {gender: {'$regex': query, '$options' : 'i'}}}}, function(err,data) {
+      Checkup.find({ email: req.user.email, gender: {'$regex': query, '$options' : 'i'} }, function(err,data) {
         if(err) throw err;
         else {
-          if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-          else res.render('viewreports', {user: req.user, data: data.checkups});
+          if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+          else res.render('viewreports', {user: req.user, data: data});
         }
       });
     }
     if(searchtype == 'gr') {
-      User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {grade: query}}}, function(err,data) {
+      Checkup.find({ email: req.user.email, gender: query }, function(err,data) {
         if(err) throw err;
         else {
-          if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-          else res.render('viewreports', {user: req.user, data: data.checkups});
+          if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+          else res.render('viewreports', {user: req.user, data: data});
         }
       });
     }
     if(searchtype == 'ag') {
-      User.findOne({ email: req.user.email }, {checkups: {$elemMatch: {age: query}}}, function(err,data) {
+      Checkup.find({ email: req.user.email, age: query }, function(err,data) {
         if(err) throw err;
         else {
-          if(!data || data.checkups.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-          else res.render('viewreports', {user: req.user, data: data.checkups});
+          if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+          else res.render('viewreports', {user: req.user, data: data});
         }
       });
     }
