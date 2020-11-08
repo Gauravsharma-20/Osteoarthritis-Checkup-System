@@ -1,9 +1,9 @@
 <div class="preprocess-page">
 <div class="form">
 <h1 class="mt-4" style="padding-left: 40">Dashboard</h1>
-<p class="lead mb-3">Patient Name: <strong><%= patientname %></strong></p>
-<p class="lead mb-3">Examination of: <strong><%= examination %> Knee</strong></p>
-<p class="lead mb-3">View: <strong><%= view %></strong></p>
+<p class="lead mb-3">Patient Name: <strong><span class="notranslate"><%= patientname %></span></strong></p>
+<p class="lead mb-3">Examination of: <strong><span class="notranslate"><%= examination %> Knee</span></strong></p>
+<p class="lead mb-3">View: <strong><span class="notranslate"><%= view %></span></strong></p>
 <img src="<%= imgname %>" alt="">
 <form action="/getreport" method="post">
   <button class="btn btn-secondary" type="submit" name="button" style="margin-top: 16">Get report</button>

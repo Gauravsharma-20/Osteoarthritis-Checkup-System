@@ -21,7 +21,8 @@
   <p class="lead mb-3" style="margin-left: 45%"><strong>No results found</strong></p>
 <% } %>
 <% if(data !== "nothing") { %>
-<table style="width:70%; margin-left: 220">
+<span class="notranslate">
+<table style="width:70%; margin: 0 auto;">
   <tr>
     <th> Patient Name </th>
     <th> Age </th>
@@ -37,12 +38,13 @@
       <td> <%= item.age %> </td>
       <td> <%= item.grade %> </td>
       <td> <%= item.gender %> </td>
-	  <td> <%= item.examination %> </td>
-	  <td> <%= item.view %> </td>
+  	  <td> <%= item.examination %> Knee </td>
+  	  <td> <%= item.view %> </td>
       <td> <a href="<%= item.filename %>.pdf" download>Download here</a> </td>
     </tr>
   <% }); %>
 </table>
+</span>
 <% } %>
 <br>
 <br>

@@ -1,29 +1,38 @@
 <div class="login-page">
   <div class="form">
 
-<h1 class="mt-4" style="padding-left: 85">Dashboard</h1>
-<p class="lead mb-3">Welcome <strong><%= user.name %></strong></p>
+<h1 class="mt-4" style="margin: 0 auto; width: 100%">Dashboard</h1>
+<p class="lead mb-3" style="margin: 0 auto; margin-top:5%; width: 100%">Welcome <strong><span class="notranslate"><%= user.name %></span></strong></p>
 <%- include('partials/messages'); %>
-<a href="/viewreports" class="btn btn-secondary"><button style="margin:15px;">View Reports</button></a>
+<br>
+<a href="/viewreports" class="btn btn-secondary"><button>View Reports</button></a>
 <form action="/dashboard" method="POST" enctype="multipart/form-data">
+  <br>
+  <p style="text-align: left"><strong style="color:#32CD32; font-size: 18px;">Insert new data:</strong></p>
   <input type="text" name="patientname" value="" placeholder="Enter Patient Name" autocomplete="off">
   <input type="number" name="age" value="" placeholder="Enter Patient's age">
   <label for="gender">Gender:</label>
+  <span class="notranslate">
   <select name="gender" id="gender" style="font-size: 14px">
    <option class value="male">M</option>
    <option value="female">F</option>
    <option value="other">O</option>
   </select>
+  </span>
   <p></p>
   <label for="examination">Examination of:</label>
+  <span class="notranslate">
   <select name="examination" id="examination" style="font-size: 14px">
    <option class value="Left">Left</option>
    <option value="Right">Right</option>
   </select>
+  </span>
+  <span class="notranslate">
   <select name="view" id="view" style="font-size: 14px">
    <option class value="AP">AP</option>
-   <option value="PA">PA</option>
+   <option value="PA">Lateral</option>
   </select>
+  </span>
   <p></p>
   <input type="file" name="xray"></input>
   <br>

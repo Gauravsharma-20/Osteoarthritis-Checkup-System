@@ -1,27 +1,27 @@
 <% if(typeof errors != 'undefined'){ %> <% errors.forEach(function(error) { %>
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong><%= error.msg %></strong>
+  <strong style="color:#FF0000"><%= error.msg %></strong>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="max-width: 15%;">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <% }); %> <% } %> <% if(success_msg != ''){ %>
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong ><%= success_msg %></strong>
+  <strong style="color:#32CD32"><%= success_msg %></strong>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="max-width: 15%;">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <% } %> <% if(error_msg != ''){ %>
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-  <strong><%= error_msg %></strong>
+  <strong style="color:#FF0000"><%= error_msg %></strong>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="max-width: 15%;">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <% } %> <% if(error != ''){ %>
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-  <strong><%= error %></strong>
+  <strong style="color:#FF0000"><%= error %></strong>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="max-width: 15%;">
     <span aria-hidden="true">&times;</span>
   </button>
