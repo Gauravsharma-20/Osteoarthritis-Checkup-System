@@ -15,6 +15,9 @@ require('./config/passport')(passport);
 // Connect to MongoDB
 mongoose.connect("mongodb://localhost:27017/kneeOADb", { useNewUrlParser: true, useUnifiedTopology: true });
 
+// For online mongodb access
+//mongoose.connect("mongodb+srv://admin-thaman:admin-thaman@cluster0.xfrpk.mongodb.net/kneeOADb?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
+
 // EJS
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
