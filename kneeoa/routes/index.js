@@ -226,7 +226,7 @@ router.post('/viewreports', ensureAuthenticated, function(req, res) {
       });
     }
     if(searchtype == 'gr') {
-      Checkup.find({ email: req.user.email, gender: query }, function(err,data) {
+      Checkup.find({ email: req.user.email, grade: query }, function(err,data) {
         if(err) throw err;
         else {
           if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
