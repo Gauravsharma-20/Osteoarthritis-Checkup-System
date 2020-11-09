@@ -10,7 +10,8 @@ const storage = multer.diskStorage({
         cb(null, './uploads/');
     },
     filename: function(req, file, cb) {
-        const now = new Date().toISOString(); const date = now.replace(/:/g, '-'); cb(null, date + file.originalname);
+        //const now = new Date().toISOString(); const date = now.replace(/:/g, '-'); cb(null, date + file.originalname);
+        cb(null, Math.ceil(Math.random()*100000000)+".jpg");
     }
 });
 const upload = multer({storage: storage});
@@ -199,6 +200,15 @@ router.post('/viewreports', ensureAuthenticated, function(req, res) {
   else {
     if(searchtype == 'pn') {
       Checkup.find({ email: req.user.email, patientname: {'$regex': query, '$options' : 'i'} }, function(err,data) {
+        if(err) throw err;
+        else {
+          if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
+          else res.render('viewreports', {user: req.user, data: data});
+        }
+      });
+    }
+    if(searchtype == 'sr') {
+      Checkup.find({ email: req.user.email, filename: query }, function(err,data) {
         if(err) throw err;
         else {
           if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
