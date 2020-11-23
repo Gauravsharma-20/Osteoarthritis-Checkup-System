@@ -191,7 +191,7 @@ router.post('/viewreports', ensureAuthenticated, function(req, res) {
       if(err) throw err;
       else {
         if(!data || data.length == 0) res.render('viewreports', {errors, user: req.user, data: "nothing"});
-        else res.render('viewreports', {errors, user: req.user, data: data});
+        else res.render('searchreports', {errors, user: req.user, data: data});
       }
     });
   }
@@ -203,7 +203,7 @@ router.post('/viewreports', ensureAuthenticated, function(req, res) {
         if(err) throw err;
         else {
           if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-          else res.render('viewreports', {user: req.user, data: data});
+          else res.render('searchreports', {user: req.user, data: data});
         }
       });
     }
@@ -212,7 +212,7 @@ router.post('/viewreports', ensureAuthenticated, function(req, res) {
         if(err) throw err;
         else {
           if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-          else res.render('viewreports', {user: req.user, data: data});
+          else res.render('searchreports', {user: req.user, data: data});
         }
       });
     }
@@ -221,7 +221,7 @@ router.post('/viewreports', ensureAuthenticated, function(req, res) {
         if(err) throw err;
         else {
           if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-          else res.render('viewreports', {user: req.user, data: data});
+          else res.render('searchreports', {user: req.user, data: data});
         }
       });
     }
@@ -230,7 +230,7 @@ router.post('/viewreports', ensureAuthenticated, function(req, res) {
         if(err) throw err;
         else {
           if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-          else res.render('viewreports', {user: req.user, data: data});
+          else res.render('searchreports', {user: req.user, data: data});
         }
       });
     }
@@ -239,7 +239,7 @@ router.post('/viewreports', ensureAuthenticated, function(req, res) {
         if(err) throw err;
         else {
           if(!data || data.length == 0) res.render('viewreports', {user: req.user, data: "nothing"});
-          else res.render('viewreports', {user: req.user, data: data});
+          else res.render('searchreports', {user: req.user, data: data});
         }
       });
     }

@@ -1,0 +1,59 @@
+<div class="body">
+<br>
+<h1 style="display: inline; padding-left: 650" class="mt-4">View Reports</h1>
+<br>
+<br>
+<div class="form"">
+  <%- include('partials/messages'); %>
+<form action="/viewreports" method="post">
+  <input type="text" name="searchquery" style="width:70%; height:5%" value="" placeholder="Search..." autocomplete="off">
+  <select class="btn btn-secondary" name="searchtype" id="searchtype" style="font-size: 18px">
+    <option value="pn">Patient name</option>
+    <option value="sr">Serial No.</option>
+    <option value="gn">Gender</option>
+    <option value="gr">Grade</option>
+    <option value="ag">Age</option>
+  </select>
+  <br><br>
+  <button class="btn btn-secondary" style="margin-bottom:-15px; width: 55%" name="button">Search</button>
+</form>
+</div>
+<% if(data == "nothing") { %>
+  <p class="lead mb-3" style="margin-left: 45%"><strong>No results found</strong></p>
+<% } %>
+<% if(data !== "nothing") { %>
+<span class="notranslate">
+<table style="width:70%; margin: 0 auto;">
+  <tr>
+    <th style="background-color: #add8e6"> Sr. No. </th>
+    <th> Patient Name </th>
+    <th> Age </th>
+    <th> Grade </th>
+    <th> Gender </th>
+	<th> Examination of </th>
+	<th> View </th>
+    <th> Download Report </th>
+  </tr>
+  <% data.forEach(function (item){ %>
+    <tr>
+      <td> <%= item.filename %> </td>
+      <td> <%= item.patientname %> </td>
+      <td> <%= item.age %> </td>
+      <td> <%= item.grade %> </td>
+      <td> <%= item.gender %> </td>
+  	  <td> <%= item.examination %> Knee </td>
+  	  <td> <%= item.view %> </td>
+      <td> <a href="<%= item.filename %>.pdf" download>Download here</a> </td>
+    </tr>
+  <% }); %>
+</table>
+</span>
+<% } %>
+<br>
+<br>
+<br>
+<div class="formm">
+<a href="/viewreports" style="padding-left: 500"><button style="margin:11px;" class="btn btn-secondary">Back</button></a>
+<a href="/users/logout"><button class="btn btn-secondary">Logout</button></a>
+</div>
+</div>
