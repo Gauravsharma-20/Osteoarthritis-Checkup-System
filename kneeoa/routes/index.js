@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
     },
     filename: function(req, file, cb) {
         //const now = new Date().toISOString(); const date = now.replace(/:/g, '-'); cb(null, date + file.originalname);
-        cb(null, Math.ceil(Math.random()*100000000)+".jpg");
+        cb(null, 10000000+Math.ceil(Math.random()*10000000)+".jpg");
     }
 });
 const upload = multer({storage: storage});
