@@ -2,14 +2,14 @@ import numpy as np
 import pandas as pd
 import keras
 import tensorflow as tf
-'''
+
 from keras.models import Sequential
 from keras.optimizers import Adam
 from keras.losses import categorical_crossentropy
 from keras.layers import Dense, Flatten, Conv3D, MaxPooling3D, DropoutDense, Flatten, Conv2D, MaxPooling2D, Dropout,GlobalAveragePooling2D,BatchNormalization
 from sklearn.model_selection import train_test_split
-'''
-'''Takes the Input Shape and returns the model trained over respective dataset'''
+'''These are models that were used to experiment and these were run on sample dataset.These models are originally done on Cifar-10 Dataset and used for classification purpose.'''
+'''Takes the Input Shape(inputShape as parameter is passed) and returns the model trained over dataset'''
 def ConvPool_CNN_C(inputShape):
   model = Sequential()
   model.add(Conv2D(96,kernel_size=(3,3),activation='relu',padding='same'))
