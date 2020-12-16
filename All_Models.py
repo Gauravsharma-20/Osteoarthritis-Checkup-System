@@ -8,7 +8,8 @@ from keras.optimizers import Adam
 from keras.losses import categorical_crossentropy
 from keras.layers import Dense, Flatten, Conv3D, MaxPooling3D, DropoutDense, Flatten, Conv2D, MaxPooling2D, Dropout,GlobalAveragePooling2D,BatchNormalization
 from sklearn.model_selection import train_test_split
-'''These are models that were used to experiment and these were run on sample dataset.These models are originally done on Cifar-10 Dataset and used for classification purpose.'''
+'''These are models that were used to experiment and these were run on sample dataset.These models are originally done on Cifar-10 Dataset and used for classification purpose.
+Lack of Regularization was the most important factor that observed through these models. Also some changes are also made in layers so as to adjust to our dataset.'''
 '''Takes the Input Shape(inputShape as parameter is passed) and returns the model trained over dataset'''
 def ConvPool_CNN_C(inputShape):
   model = Sequential()
