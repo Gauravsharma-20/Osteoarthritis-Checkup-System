@@ -20,7 +20,7 @@ The whole system can be summed up as an <b>Osteoarthritis Grade Prediction and C
 A full-fledged system with <b>1/5th the size of industry standard model</b> (published by University of California San Francisco in early 2019(Fine-tuned VGG19 Model). [link to Publication](https://www.sciencedirect.com/science/article/abs/pii/S0895611118304956?via%3Dihub)) and an<b> increment in accuracy from 69.7% to 75.42% </b>([more details](https://github.com/Gauravsharma-20/Minor-Project/blob/master/SystemDetails/ModelDetails.png)) and a proprietary Pre-processing method which is able to resolve most of defects from images ([sample results](https://github.com/Gauravsharma-20/Minor-Project/blob/master/SystemDetails/SamplePreprocessedResults.jpg)). Alongside that, a robust web application with a proper database management system.System is designed in a way to be more scalable in future.
 
 ### DEMO:
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/Gauravsharma-20/Minor-Project/blob/master/SystemDetails/Demo.gif" width="60%" height="55%"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/Gauravsharma-20/Minor-Project/blob/master/SystemDetails/Demo.gif" width="75%" height="60%"><br>
 
 
 ### How To Run:
